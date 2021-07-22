@@ -8,7 +8,7 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 @createTime   7/22/21 6:04 PM
 */
 
-func strobogrammaticInRange(low string, high string) int {
+func strobogrammaticInRange2(low string, high string) int {
 	ret := 0
 	queue := []string{"", "0", "1", "8"}
 	for len(queue) > 0 {
