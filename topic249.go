@@ -49,11 +49,13 @@ func groupStrings(strings []string) [][]string {
 	return ans
 }
 
+// 判断两个字符串是否可以通过位移实现转换
 func canTransform(s, t string) bool {
 	if len(s) != len(t) {
 		return false
 	}
 	for i := 1; i < len(s); i++ {
+		// 如果两个字符串相邻字符的距离相等，那么可以平移得到。注意这里需要把uint类型转换为int，否则相减可能会溢出，得到奇怪的结果
 		if (int(s[i])-int(s[i-1])-int(t[i])+int(t[i-1]))%26 != 0 {
 			return false
 		}
