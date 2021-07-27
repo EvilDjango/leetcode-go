@@ -51,20 +51,6 @@ func conflict(a, b []int) bool {
 	return a[1] >= b[0]
 }
 
-type Intervals [][]int
-
-func (in Intervals) Len() int {
-	return len(in)
-}
-
-func (in Intervals) Less(i, j int) bool {
-	return in[i][0] < in[j][0]
-}
-
-func (in Intervals) Swap(i, j int) {
-	in[i], in[j] = in[j], in[i]
-}
-
 // 先排序
 func canAttendMeetings2(intervals [][]int) bool {
 	sort.Sort(Intervals(intervals))
