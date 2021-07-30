@@ -1,6 +1,9 @@
 package leetcode_go
 
-import "math"
+import (
+	"math"
+	"reflect"
+)
 
 /*
 Oops, forgot to write comments. Good luck, bro.
@@ -196,4 +199,53 @@ func extremeWithoutOne(nums []int, min bool) []int {
 		}
 	}
 	return ret
+}
+
+func EqualIgnoreOrder(slice1, slice2 interface{}) bool {
+	a, _ := CreateAnyTypeSlice(slice1)
+	b, _ := CreateAnyTypeSlice(slice2)
+	if len(a) != len(b) {
+		return false
+	}
+	for _, x := range a {
+		found := false
+		for _, y := range b {
+			if x == y {
+				found = true
+				break
+			}
+		}
+		if !found {
+			return false
+		}
+	}
+	return true
+}
+
+func isSlice(arg interface{}) (val reflect.Value, ok bool) {
+	val = reflect.ValueOf(arg)
+
+	if val.Kind() == reflect.Slice {
+		ok = true
+	}
+
+	return
+}
+
+func CreateAnyTypeSlice(slice interface{}) ([]interface{}, bool) {
+	val, ok := isSlice(slice)
+
+	if !ok {
+		return nil, false
+	}
+
+	sliceLen := val.Len()
+
+	out := make([]interface{}, sliceLen)
+
+	for i := 0; i < sliceLen; i++ {
+		out[i] = val.Index(i).Interface()
+	}
+
+	return out, true
 }
