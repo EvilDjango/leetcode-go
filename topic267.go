@@ -22,6 +22,20 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 */
 
 func generatePalindromes(s string) []string {
+	var dfs func(dic map[rune]int, n int, s string, strs *[]string)
+	dfs = func(dic map[rune]int, n int, s string, strs *[]string) {
+		if len(s) == n {
+			*strs = append(*strs, s)
+			return
+		}
+		for r, c := range dic {
+			if c > 0 {
+				dic[r] -= 2
+				dfs(dic, n, string(r)+s+string(r), strs)
+				dic[r] += 2
+			}
+		}
+	}
 	cnt := make(map[rune]int, len(s))
 	for _, r := range s {
 		cnt[r]++
@@ -44,18 +58,4 @@ func generatePalindromes(s string) []string {
 	var ans []string
 	dfs(cnt, len(s), center, &ans)
 	return ans
-}
-
-func dfs(dic map[rune]int, n int, s string, strs *[]string) {
-	if len(s) == n {
-		*strs = append(*strs, s)
-		return
-	}
-	for r, c := range dic {
-		if c > 0 {
-			dic[r] -= 2
-			dfs(dic, n, string(r)+s+string(r), strs)
-			dic[r] += 2
-		}
-	}
 }

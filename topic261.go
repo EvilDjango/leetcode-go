@@ -21,6 +21,7 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 @createTime   7/28/21 2:45 PM
 */
 
+// bfs
 func validTree(n int, edges [][]int) bool {
 	eMap := make(map[int][]int)
 	for _, edge := range edges {
@@ -56,10 +57,10 @@ func validTree2(n int, edges [][]int) bool {
 		ancestors[i] = i
 	}
 	for _, edge := range edges {
-		if getAncestor(ancestors, edge[0]) == getAncestor(ancestors, edge[1]) {
+		if !merge(ancestors, edge[0], edge[1]) {
 			return false
 		}
-		merge(ancestors, edge[0], edge[1])
+
 	}
 	root := 0
 	for i := 0; i < n; i++ {
@@ -73,10 +74,14 @@ func validTree2(n int, edges [][]int) bool {
 	return true
 }
 
-func merge(ancestors []int, i, j int) {
+func merge(ancestors []int, i, j int) bool {
 	a1 := getAncestor(ancestors, i)
 	a2 := getAncestor(ancestors, j)
+	if a1 == a2 {
+		return false
+	}
 	ancestors[a2] = a1
+	return true
 }
 
 func getAncestor(ancestors []int, i int) int {
@@ -84,4 +89,35 @@ func getAncestor(ancestors []int, i int) int {
 		ancestors[i] = getAncestor(ancestors, ancestors[i])
 	}
 	return ancestors[i]
+}
+
+// dfs
+func validTree3(n int, edges [][]int) bool {
+	adjacents := make([][]int, n)
+	for _, edge := range edges {
+		u, v := edge[0], edge[1]
+		adjacents[u] = append(adjacents[u], v)
+		adjacents[v] = append(adjacents[v], u)
+	}
+	statuses := make([]int, n)
+	count := 0
+	dfsValidTree(adjacents, statuses, -1, 0, &count)
+	return count == n
+}
+
+func dfsValidTree(adjacents [][]int, statuses []int, prev, i int, count *int) bool {
+	if statuses[i] == 1 {
+		return false
+	}
+	statuses[i] = 1
+	for _, adjacent := range adjacents[i] {
+		if adjacent == prev {
+			continue
+		}
+		if !dfsValidTree(adjacents, statuses, i, adjacent, count) {
+			return false
+		}
+	}
+	*count++
+	return true
 }

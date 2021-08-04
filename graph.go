@@ -1,7 +1,7 @@
 package leetcode_go
 
 /*
-Oops, forgot to write comments. Good luck, bro.
+图节点
 
 Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 @author xuejunc
@@ -9,4 +9,6 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 */
 
 type Node struct {
+	Val      int
+	Adjacent []*Node
 }
