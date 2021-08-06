@@ -1,6 +1,9 @@
 package leetcode_go
 
-import "container/heap"
+import (
+	"container/heap"
+	"leetcode-go/common"
+)
 
 /*
 264. 丑数 II
@@ -34,7 +37,7 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 
 // 优先队列（堆）
 func nthUglyNumber(n int) int {
-	ints := Ints(make([]int, 0, 2*n))
+	ints := common.Ints(make([]int, 0, 2*n))
 	h := &ints
 	heap.Init(h)
 	heap.Push(h, 1)
@@ -60,7 +63,7 @@ func nthUglyNumber2(n int) int {
 	p2, p3, p5 := 0, 0, 0
 	for i := 1; i < n; i++ {
 		x2, x3, x5 := nums[p2]*2, nums[p3]*3, nums[p5]*5
-		min := Min(x2, Min(x3, x5))
+		min := common.Min(x2, common.Min(x3, x5))
 		nums[i] = min
 		if x2 == min {
 			p2++

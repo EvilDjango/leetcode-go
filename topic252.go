@@ -1,6 +1,7 @@
 package leetcode_go
 
 import (
+	"leetcode-go/common"
 	"sort"
 )
 
@@ -53,7 +54,7 @@ func conflict(a, b []int) bool {
 
 // 先排序
 func canAttendMeetings2(intervals [][]int) bool {
-	sort.Sort(Intervals(intervals))
+	sort.Sort(common.Intervals(intervals))
 	for i := 1; i < len(intervals); i++ {
 		if intervals[i][0] < intervals[i-1][1] {
 			return false

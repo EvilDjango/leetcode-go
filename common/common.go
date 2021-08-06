@@ -1,4 +1,4 @@
-package leetcode_go
+package common
 
 import (
 	"math"
@@ -25,12 +25,6 @@ func Max(i, j int) int {
 		return i
 	}
 	return j
-}
-
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
 }
 
 type Ints []int
@@ -72,14 +66,14 @@ func (in Intervals) Swap(i, j int) {
 	in[i], in[j] = in[j], in[i]
 }
 
-func UpperBound(nums []int, target int) int {
+func UpperBound(nums []int, target float64) int {
 	return UpperBoundPart(nums, target, 0, len(nums))
 }
 
-func UpperBoundPart(nums []int, target, l, r int) int {
+func UpperBoundPart(nums []int, target float64, l, r int) int {
 	for l < r {
 		mid := (r-l)/2 + l
-		if nums[mid] <= target {
+		if float64(nums[mid]) <= target {
 			l = mid + 1
 		} else {
 			r = mid
@@ -88,14 +82,14 @@ func UpperBoundPart(nums []int, target, l, r int) int {
 	return l
 }
 
-func LowerBound(nums []int, target int) int {
+func LowerBound(nums []int, target float64) int {
 	return LowerBoundPart(nums, target, 0, len(nums))
 }
 
-func LowerBoundPart(nums []int, target, l, r int) int {
+func LowerBoundPart(nums []int, target float64, l, r int) int {
 	for l < r {
 		mid := (r-l)/2 + l
-		if nums[mid] < target {
+		if float64(nums[mid]) < target {
 			l = mid + 1
 		} else {
 			r = mid

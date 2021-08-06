@@ -1,6 +1,9 @@
 package leetcode_go
 
-import "sort"
+import (
+	"leetcode-go/common"
+	"sort"
+)
 
 /*
 259. 较小的三数之和
@@ -22,7 +25,7 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 */
 func threeSumSmaller(nums []int, target int) int {
 	n := len(nums)
-	sort.Sort(Ints(nums))
+	sort.Sort(common.Ints(nums))
 	ans := 0
 loop1:
 	for i := 0; i < n; i++ {
@@ -49,11 +52,11 @@ loop1:
 // 使用二分查找
 func threeSumSmaller2(nums []int, target int) int {
 	n := len(nums)
-	sort.Sort(Ints(nums))
+	sort.Sort(common.Ints(nums))
 	ans := 0
 	for i := 0; i < n; i++ {
 		for j := i + 1; j < n; j++ {
-			ans += LowerBoundPart(nums, target-nums[i]-nums[j], j+1, n) - j - 1
+			ans += common.LowerBoundPart(nums, float64(target-nums[i]-nums[j]), j+1, n) - j - 1
 		}
 	}
 	return ans
@@ -62,7 +65,7 @@ func threeSumSmaller2(nums []int, target int) int {
 // 双指针法
 func threeSumSmaller3(nums []int, target int) int {
 	n := len(nums)
-	sort.Sort(Ints(nums))
+	sort.Sort(common.Ints(nums))
 	ans := 0
 	for i := 0; i < n; i++ {
 		j, k := i+1, n-1

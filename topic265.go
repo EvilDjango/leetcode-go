@@ -1,6 +1,9 @@
 package leetcode_go
 
-import "math"
+import (
+	"leetcode-go/common"
+	"math"
+)
 
 /*
 265. 粉刷房子 II
@@ -49,14 +52,14 @@ func minCostII(costs [][]int) int {
 		dp[0][i] = costs[0][i]
 	}
 	for i := 1; i < n; i++ {
-		minWithoutOne := MinWithoutOne(dp[i-1])
+		minWithoutOne := common.MinWithoutOne(dp[i-1])
 		for j := 0; j < k; j++ {
 			dp[i][j] = costs[i][j] + minWithoutOne[j]
 		}
 	}
 	ans := math.MaxInt32
 	for _, cost := range dp[n-1] {
-		ans = Min(ans, cost)
+		ans = common.Min(ans, cost)
 	}
 	return ans
 }

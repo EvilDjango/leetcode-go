@@ -1,5 +1,7 @@
 package leetcode_go
 
+import "leetcode-go/graph"
+
 /*
 207. 课程表
 你这个学期必须选修 numCourses 门课程，记为 0 到 numCourses - 1 。
@@ -39,7 +41,7 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 
 //dfs
 func canFinish(numCourses int, prerequisites [][]int) bool {
-	var nodes []*Node
+	var nodes []*graph.Node
 	for _, pre := range prerequisites {
 		addNode(&nodes, pre[0])
 		addNode(&nodes, pre[1])
@@ -56,7 +58,7 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
 	return true
 }
 
-func dfsVisit(nodes []*Node, status []int, i int) bool {
+func dfsVisit(nodes []*graph.Node, status []int, i int) bool {
 	if status[i] == 1 {
 		return false
 	}
@@ -74,9 +76,9 @@ func dfsVisit(nodes []*Node, status []int, i int) bool {
 	return true
 }
 
-func addNode(nodes *[]*Node, newNode int) {
+func addNode(nodes *[]*graph.Node, newNode int) {
 	for i := len(*nodes); i <= newNode; i++ {
-		*nodes = append(*nodes, &Node{Val: i})
+		*nodes = append(*nodes, &graph.Node{Val: i})
 	}
 }
 

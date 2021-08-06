@@ -1,7 +1,9 @@
 package leetcode_go
 
 import (
-	"strings"
+	"bytes"
+	"fmt"
+	"strconv"
 )
 
 /*
@@ -48,12 +50,26 @@ type Codec struct {
 
 // Encodes a list of strings to a single string.
 func (codec *Codec) Encode(strs []string) string {
-	return strings.Join(strs, string(Sep))
+	buf := bytes.Buffer{}
+	for i := 0; i < len(strs); i++ {
+		buf.WriteString(fmt.Sprintf("%.4d", len(strs[i])))
+		buf.WriteString(strs[i])
+	}
+	return buf.String()
 }
 
 // Decodes a single string to a list of strings.
 func (codec *Codec) Decode(strs string) []string {
-	return strings.Split(strs, string(Sep))
+	var ret []string
+	for i := 0; i < len(strs); {
+		size, err := strconv.Atoi(strs[i : i+4])
+		if err != nil {
+			panic("wrong input")
+		}
+		ret = append(ret, strs[i+4:i+4+size])
+		i += 4 + size
+	}
+	return ret
 }
 
 // Your Codec object will be instantiated and called as such:

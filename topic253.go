@@ -2,6 +2,7 @@ package leetcode_go
 
 import (
 	"container/heap"
+	"leetcode-go/common"
 	"sort"
 )
 
@@ -32,9 +33,9 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 */
 
 func minMeetingRooms(intervals [][]int) int {
-	h := &Ints{}
+	h := &common.Ints{}
 	heap.Init(h)
-	sort.Sort(Intervals(intervals))
+	sort.Sort(common.Intervals(intervals))
 	for i := 0; i < len(intervals); i++ {
 		if h.Len() > 0 {
 			x := heap.Pop(h).(int)
@@ -49,8 +50,8 @@ func minMeetingRooms(intervals [][]int) int {
 
 func minMeetingRooms2(intervals [][]int) int {
 	n := len(intervals)
-	starts := Ints(make([]int, n))
-	ends := Ints(make([]int, n))
+	starts := common.Ints(make([]int, n))
+	ends := common.Ints(make([]int, n))
 	for i := 0; i < n; i++ {
 		starts[i] = intervals[i][0]
 		ends[i] = intervals[i][1]

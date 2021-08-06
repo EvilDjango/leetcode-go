@@ -1,5 +1,7 @@
 package leetcode_go
 
+import "leetcode-go/tree"
+
 /*
 250. 统计同值子树
 给定一个二叉树，统计该二叉树数值相同的子树个数。
@@ -25,13 +27,13 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 */
 
 // 递归
-func countUnivalSubtrees(root *TreeNode) int {
+func countUnivalSubtrees(root *tree.TreeNode) int {
 	count := 0
 	isUnival(root, &count)
 	return count
 }
 
-func isUnival(root *TreeNode, count *int) bool {
+func isUnival(root *tree.TreeNode, count *int) bool {
 	if root == nil {
 		return true
 	}
@@ -46,11 +48,11 @@ func isUnival(root *TreeNode, count *int) bool {
 }
 
 // 循环，后序遍历
-func countUnivalSubtrees2(root *TreeNode) int {
+func countUnivalSubtrees2(root *tree.TreeNode) int {
 	ans := 0
-	var stack []*TreeNode
-	var last *TreeNode
-	universal := map[*TreeNode]bool{nil: true}
+	var stack []*tree.TreeNode
+	var last *tree.TreeNode
+	universal := map[*tree.TreeNode]bool{nil: true}
 	for len(stack) > 0 || root != nil {
 		if root != nil {
 			stack = append(stack, root)
@@ -75,14 +77,14 @@ func countUnivalSubtrees2(root *TreeNode) int {
 }
 
 // 递归2
-func countUnivalSubtrees3(root *TreeNode) int {
+func countUnivalSubtrees3(root *tree.TreeNode) int {
 	count := 0
 	isValidPart(root, 0, &count)
 	return count
 }
 
 // 判断当前的子树能否与其父节点共同组成一个单值子树
-func isValidPart(root *TreeNode, ancestor int, count *int) bool {
+func isValidPart(root *tree.TreeNode, ancestor int, count *int) bool {
 	if root == nil {
 		return true
 	}

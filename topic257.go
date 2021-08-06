@@ -2,6 +2,7 @@ package leetcode_go
 
 import (
 	"bytes"
+	"leetcode-go/tree"
 	"strconv"
 )
 
@@ -32,13 +33,13 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 */
 
 // dfs
-func binaryTreePaths(root *TreeNode) []string {
+func binaryTreePaths(root *tree.TreeNode) []string {
 	var ans []string
 	findPath(root, bytes.Buffer{}, &ans)
 	return ans
 }
 
-func findPath(root *TreeNode, buffer bytes.Buffer, paths *[]string) {
+func findPath(root *tree.TreeNode, buffer bytes.Buffer, paths *[]string) {
 	if root == nil {
 		return
 	}
@@ -57,9 +58,9 @@ func findPath(root *TreeNode, buffer bytes.Buffer, paths *[]string) {
 }
 
 // 广度优先遍历
-func binaryTreePaths2(root *TreeNode) []string {
+func binaryTreePaths2(root *tree.TreeNode) []string {
 	type myNode struct {
-		cur       *TreeNode
+		cur       *tree.TreeNode
 		ancestors string
 	}
 	var ans []string

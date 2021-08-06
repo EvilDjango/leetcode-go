@@ -1,5 +1,7 @@
 package leetcode_go
 
+import "leetcode-go/common"
+
 /*
 256. 粉刷房子
 假如有一排房子，共 n 个，每个房子可以被粉刷成红色、蓝色或者绿色这三种颜色中的一种，你需要粉刷所有的房子并且使其相邻的两个房子颜色不能相同。
@@ -44,9 +46,9 @@ func minCost(costs [][]int) int {
 	dp[0][1] = costs[0][1]
 	dp[0][2] = costs[0][2]
 	for i := 1; i < n; i++ {
-		dp[i][0] += Min(dp[i-1][1], dp[i-1][2]) + costs[i][0]
-		dp[i][1] += Min(dp[i-1][0], dp[i-1][2]) + costs[i][1]
-		dp[i][2] += Min(dp[i-1][0], dp[i-1][1]) + costs[i][2]
+		dp[i][0] += common.Min(dp[i-1][1], dp[i-1][2]) + costs[i][0]
+		dp[i][1] += common.Min(dp[i-1][0], dp[i-1][2]) + costs[i][1]
+		dp[i][2] += common.Min(dp[i-1][0], dp[i-1][1]) + costs[i][2]
 	}
-	return Min(dp[n-1][0], Min(dp[n-1][1], dp[n-1][2]))
+	return common.Min(dp[n-1][0], common.Min(dp[n-1][1], dp[n-1][2]))
 }

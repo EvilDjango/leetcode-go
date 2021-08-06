@@ -1,6 +1,7 @@
 package leetcode_go
 
 import (
+	"leetcode-go/common"
 	"testing"
 )
 
@@ -29,7 +30,7 @@ func Test_generatePalindromes(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := generatePalindromes(tt.args.s); !EqualIgnoreOrder(got, tt.want) {
+			if got := generatePalindromes(tt.args.s); !common.EqualIgnoreOrder(got, tt.want) {
 				t.Errorf("generatePalindromes() = %v, want %v", got, tt.want)
 			}
 		})

@@ -1,5 +1,7 @@
 package leetcode_go
 
+import "leetcode-go/common"
+
 /*
 269. 火星词典
 现有一种使用英语字母的火星语言，这门语言的字母顺序与英语顺序不同。
@@ -102,7 +104,7 @@ func getTopo(edges [][]int, nodes []bool) []int {
 }
 
 func getEdge(s1, s2 string) (int, int, bool) {
-	minLen := Min(len(s1), len(s2))
+	minLen := common.Min(len(s1), len(s2))
 	for i := 0; i < minLen; i++ {
 		if s1[i] != s2[i] {
 			return int(s1[i] - 'a'), int(s2[i] - 'a'), true
@@ -124,7 +126,7 @@ func alienOrder2(words []string) string {
 	for i := 1; i < len(words); i++ {
 		w1, w2 := words[i-1], words[i]
 		j := 0
-		minLen := Min(len(w1), len(w2))
+		minLen := common.Min(len(w1), len(w2))
 		for ; j < minLen; j++ {
 			if w1[j] != w2[j] {
 				adjacency[w1[j]] = append(adjacency[w1[j]], w2[j])

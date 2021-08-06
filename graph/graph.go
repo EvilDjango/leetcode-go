@@ -1,4 +1,4 @@
-package leetcode_go
+package graph
 
 /*
 图节点

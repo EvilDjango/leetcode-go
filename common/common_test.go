@@ -1,4 +1,4 @@
-package leetcode_go
+package common
 
 import (
 	"reflect"
@@ -46,7 +46,7 @@ func TestLowerBound(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := LowerBound(tt.args.nums, tt.args.target); got != tt.want {
+			if got := LowerBound(tt.args.nums, float64(tt.args.target)); got != tt.want {
 				t.Errorf("LowerBound() = %v, want %v", got, tt.want)
 			}
 		})
@@ -88,7 +88,7 @@ func TestLowerBoundPart(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := LowerBoundPart(tt.args.nums, tt.args.target, tt.args.l, tt.args.r); got != tt.want {
+			if got := LowerBoundPart(tt.args.nums, float64(tt.args.target), tt.args.l, tt.args.r); got != tt.want {
 				t.Errorf("LowerBoundPart() = %v, want %v", got, tt.want)
 			}
 		})
@@ -128,7 +128,7 @@ func TestUpperBound(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := UpperBound(tt.args.nums, tt.args.target); got != tt.want {
+			if got := UpperBound(tt.args.nums, float64(tt.args.target)); got != tt.want {
 				t.Errorf("UpperBound() = %v, want %v", got, tt.want)
 			}
 		})
@@ -165,7 +165,7 @@ func TestUpperBoundPart(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := UpperBoundPart(tt.args.nums, tt.args.target, tt.args.l, tt.args.r); got != tt.want {
+			if got := UpperBoundPart(tt.args.nums, float64(tt.args.target), tt.args.l, tt.args.r); got != tt.want {
 				t.Errorf("UpperBoundPart() = %v, want %v", got, tt.want)
 			}
 		})
