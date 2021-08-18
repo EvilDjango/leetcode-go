@@ -48,6 +48,19 @@ var directions = [][]int{{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {
 
 // 使用额外空间
 func gameOfLife(board [][]int) {
+	var countAlive = func(statuses [][]int, i int, j int) int {
+		cnt := 0
+		for _, direct := range directions {
+			x, y := i+direct[0], j+direct[1]
+			if x < 0 || x == len(statuses) || y < 0 || y == len(statuses[0]) {
+				continue
+			}
+			if statuses[x][y] == 1 {
+				cnt++
+			}
+		}
+		return cnt
+	}
 	m, n := len(board), len(board[0])
 	prev := make([][]int, m)
 	for i := 0; i < m; i++ {
@@ -70,16 +83,29 @@ func gameOfLife(board [][]int) {
 	}
 }
 
-func countAlive(statuses [][]int, i int, j int) int {
-	cnt := 0
-	for _, direct := range directions {
-		x, y := i+direct[0], j+direct[1]
-		if x < 0 || x == len(statuses) || y < 0 || y == len(statuses[0]) {
-			continue
-		}
-		if statuses[x][y] == 1 {
-			cnt++
+// 在原数组中操作，每个数字增加一个高位来表示下一个状态，最后去掉低位即可
+func gameOfLife2(board [][]int) {
+	m, n := len(board), len(board[0])
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			sum := 0
+			for _, direct := range directions {
+				x, y := i+direct[0], j+direct[1]
+				if x < 0 || y < 0 || x == m || y == n {
+					continue
+				}
+				if board[x][y]&1 == 1 {
+					sum++
+				}
+			}
+			if (board[i][j] == 1 && sum > 1 && sum < 4) || (board[i][j] == 0 && sum == 3) {
+				board[i][j] |= 2
+			}
 		}
 	}
-	return cnt
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			board[i][j] >>= 1
+		}
+	}
 }
