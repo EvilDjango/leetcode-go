@@ -31,8 +31,7 @@ func (t *TreeNode) String() string {
 		children = 0
 		size := len(q)
 		for i := 0; i < size; i++ {
-			t = q[0]
-			q = q[1:]
+			t = q[i]
 			if i > 0 {
 				buf.WriteString("  ")
 			}
@@ -45,10 +44,9 @@ func (t *TreeNode) String() string {
 				q = append(q, t.Right)
 			} else {
 				buf.WriteString("X")
-				q = append(q, nil)
-				q = append(q, nil)
 			}
 		}
+		q = q[size:]
 		buf.WriteString("\n")
 	}
 	return buf.String()
@@ -101,7 +99,7 @@ func New(nums ...int) *TreeNode {
 				cur.Left = &TreeNode{Val: nums[i]}
 				q = append(q, cur.Left)
 			}
-			if nums[i+1] != None {
+			if i+1 < n && nums[i+1] != None {
 				cur.Right = &TreeNode{Val: nums[i+1]}
 				q = append(q, cur.Right)
 			}

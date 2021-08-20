@@ -268,3 +268,10 @@ func CreateAnyTypeSlice(slice interface{}) ([]interface{}, bool) {
 
 	return out, true
 }
+
+func Abs(num int) int {
+	if num >= 0 {
+		return num
+	}
+	return -num
+}
