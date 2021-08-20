@@ -33,7 +33,7 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 */
 
 func minMeetingRooms(intervals [][]int) int {
-	h := &common.Ints{}
+	h := &common.MinHeap{}
 	heap.Init(h)
 	sort.Sort(common.Intervals(intervals))
 	for i := 0; i < len(intervals); i++ {
@@ -50,8 +50,8 @@ func minMeetingRooms(intervals [][]int) int {
 
 func minMeetingRooms2(intervals [][]int) int {
 	n := len(intervals)
-	starts := common.Ints(make([]int, n))
-	ends := common.Ints(make([]int, n))
+	starts := common.MinHeap(make([]int, n))
+	ends := common.MinHeap(make([]int, n))
 	for i := 0; i < n; i++ {
 		starts[i] = intervals[i][0]
 		ends[i] = intervals[i][1]

@@ -61,7 +61,7 @@ func missingNumber(nums []int) int {
 }
 
 func missingNumber2(nums []int) int {
-	sort.Sort(common.Ints(nums))
+	sort.Sort(common.MinHeap(nums))
 	n := len(nums)
 	for i := 0; i < n; i++ {
 		if nums[i] != i {

@@ -1,6 +1,8 @@
 package topic291
 
-import "testing"
+import (
+	"testing"
+)
 
 /*
 Oops, forgot to write comments. Good luck, bro.

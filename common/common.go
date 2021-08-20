@@ -27,25 +27,50 @@ func Max(i, j int) int {
 	return j
 }
 
-type Ints []int
+type MinHeap []int
 
-func (h Ints) Len() int {
+func (h MinHeap) Len() int {
 	return len(h)
 }
 
-func (h Ints) Less(i, j int) bool {
+func (h MinHeap) Less(i, j int) bool {
 	return h[i] < h[j]
 }
 
-func (h Ints) Swap(i, j int) {
+func (h MinHeap) Swap(i, j int) {
 	h[i], h[j] = h[j], h[i]
 }
 
-func (h *Ints) Push(x interface{}) {
+func (h *MinHeap) Push(x interface{}) {
 	*h = append(*h, x.(int))
 }
 
-func (h *Ints) Pop() interface{} {
+func (h *MinHeap) Pop() interface{} {
+	h1 := *h
+	x := h1[len(h1)-1]
+	*h = h1[:len(h1)-1]
+	return x
+}
+
+type MaxHeap []int
+
+func (h MaxHeap) Len() int {
+	return len(h)
+}
+
+func (h MaxHeap) Less(i, j int) bool {
+	return h[i] > h[j]
+}
+
+func (h MaxHeap) Swap(i, j int) {
+	h[i], h[j] = h[j], h[i]
+}
+
+func (h *MaxHeap) Push(x interface{}) {
+	*h = append(*h, x.(int))
+}
+
+func (h *MaxHeap) Pop() interface{} {
 	h1 := *h
 	x := h1[len(h1)-1]
 	*h = h1[:len(h1)-1]
