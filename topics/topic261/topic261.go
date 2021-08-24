@@ -60,7 +60,6 @@ func validTree2(n int, edges [][]int) bool {
 		if !merge(ancestors, edge[0], edge[1]) {
 			return false
 		}
-
 	}
 	root := 0
 	for i := 0; i < n; i++ {
