@@ -38,6 +38,7 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 @author xuejunc
 @createTime   8/23/21 9:56 PM
 */
+
 func getHint(secret string, guess string) string {
 	x, y := 0, 0
 	dict := make(map[byte]int)
