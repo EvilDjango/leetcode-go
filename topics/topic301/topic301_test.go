@@ -1,4 +1,4 @@
-package topics
+package topic301
 
 import (
 	"reflect"
