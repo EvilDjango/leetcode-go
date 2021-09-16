@@ -1,114 +1,69 @@
-// 面试题 17.26. 稀疏相似度
-//两个(具有不同单词的)文档的交集(intersection)中元素的个数除以并集(union)中元素的个数，就是这两个文档的相似度。例如，{1, 5, 3} 和 {1, 7, 2, 3} 的相似度是 0.4，其中，交集的元素有 2 个，并集的元素有 5 个。给定一系列的长篇文档，每个文档元素各不相同，并与一个 ID 相关联。它们的相似度非常“稀疏”，也就是说任选 2 个文档，相似度都很接近 0。请设计一个算法返回每对文档的 ID 及其相似度。只需输出相似度大于 0 的组合。请忽略空文档。为简单起见，可以假定每个文档由一个含有不同整数的数组表示。
+// 面试题 17.15. 最长单词
+//给定一组单词words，编写一个程序，找出其中的最长单词，且该单词由这组单词中的其他单词组合而成。若有多个长度相同的结果，返回其中字典序最小的一项，若没有符合要求的单词则返回空字符串。
 //
-//输入为一个二维数组 docs，docs[i] 表示 id 为 i 的文档。返回一个数组，其中每个元素是一个字符串，代表每对相似度大于 0 的文档，其格式为 {id1},{id2}: {similarity}，其中 id1 为两个文档中较小的 id，similarity 为相似度，精确到小数点后 4 位。以任意顺序返回数组均可。
+//示例：
 //
-//示例:
-//
-//输入:
-//[
-//  [14, 15, 100, 9, 3],
-//  [32, 1, 9, 3, 5],
-//  [15, 29, 2, 6, 8, 7],
-//  [7, 10]
-//]
-//输出:
-//[
-//  "0,1: 0.2500",
-//  "0,2: 0.1000",
-//  "2,3: 0.1429"
-//]
+//输入： ["cat","banana","dog","nana","walk","walker","dogwalker"]
+//输出： "dogwalker"
+//解释： "dogwalker"可由"dog"和"walker"组成。
 //提示：
 //
-//docs.length <= 500
-//docs[i].length <= 500
-//通过次数3,309提交次数9,700
+//0 <= len(words) <= 200
+//1 <= len(words[i]) <= 100
+//通过次数5,668提交次数14,077
 //
 // @author xuejunc deerhunter0837@gmail.com
-// @create 9/9/21 12:11 PM
+// @create 9/16/21 4:12 PM
 package topic2342
 
-import (
-	"fmt"
-	"sort"
-)
+type Trie struct {
+	IsLeaf   bool
+	Children [26]*Trie
+}
 
-// 先排序，然后计算相似度
-// 不知道为什么，只能通过一半的测试用例
-func computeSimilarities(docs [][]int) []string {
-	for _, doc := range docs {
-		sort.Ints(doc)
+func (t *Trie) Insert(s string) {
+	curr := t
+	for i := 0; i < len(s); i++ {
+		index := s[i] - 'a'
+		if curr.Children[index] == nil {
+			curr.Children[index] = &Trie{}
+		}
+		curr = curr.Children[index]
 	}
-	n := len(docs)
-	var ans []string
-	for i := 0; i < n; i++ {
-		for j := i + 1; j < n; j++ {
-			similarity := getSimilarity(docs[i], docs[j])
-			if similarity > 0 {
-				ans = append(ans, fmt.Sprintf("%d,%d: %.4f", i, j, similarity))
-			}
+	curr.IsLeaf = true
+}
+
+func (t *Trie) Find(b byte) *Trie {
+	return t.Children[b-'a']
+}
+
+func longestWord(words []string) string {
+	root := &Trie{}
+	for _, word := range words {
+		root.Insert(word)
+	}
+	ans := ""
+	for _, word := range words {
+		if (len(word) > len(ans) || len(word) == len(ans) && word < ans) && isCombined(root, root, word, 0, 0) {
+			ans = word
 		}
 	}
 	return ans
 }
 
-func getSimilarity(doc1, doc2 []int) float64 {
-	m, n := len(doc1), len(doc2)
-	if m*n == 0 {
-		return 0
-	}
-	if doc1[0] > doc2[0] {
-		doc1, doc2 = doc2, doc1
-		m, n = n, m
-	}
-	if doc1[m-1] < doc2[0] {
-		return 0
-	}
-	i := m - 1
-	for ; i > 0 && doc1[i] > doc2[0]; i-- {
-	}
-	j := 0
-	common := 0
-	for i < m && j < n {
-		if doc1[i] > doc2[j] {
-			j++
-		} else if doc1[i] < doc2[j] {
-			i++
-		} else {
-			common++
-			i++
-			j++
+func isCombined(root, curr *Trie, word string, i, cnt int) bool {
+	if i == len(word) {
+		if curr == root && cnt > 1 {
+			return true
 		}
+		return false
 	}
-	return float64(common) / float64(m+n-common)
-}
-
-// 利用哈希表
-func computeSimilarities2(docs [][]int) []string {
-	n := len(docs)
-	idsByWord := make(map[int][]int)
-	commons := make([][]int, n)
-	for i := 0; i < n; i++ {
-		commons[i] = make([]int, n)
+	curr = curr.Find(word[i])
+	if curr == nil {
+		return false
 	}
-	for id, doc := range docs {
-		for _, word := range doc {
-			ids := idsByWord[word]
-			for _, sharer := range ids {
-				commons[id][sharer]++
-				commons[sharer][id]++
-			}
-			idsByWord[word] = append(ids, id)
-		}
+	if curr.IsLeaf && isCombined(root, root, word, i+1, cnt+1) {
+		return true
 	}
-	var ans []string
-	for i := 0; i < n; i++ {
-		for j := i + 1; j < n; j++ {
-			if commons[i][j] > 0 {
-				similarity := float64(commons[i][j]) / float64(len(docs[i])+len(docs[j])-commons[i][j])
-				ans = append(ans, fmt.Sprintf("%d,%d: %.4f", i, j, similarity+1e-9))
-			}
-		}
-	}
-	return ans
+	return isCombined(root, curr, word, i+1, cnt)
 }
