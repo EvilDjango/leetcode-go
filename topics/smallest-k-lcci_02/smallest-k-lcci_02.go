@@ -22,91 +22,58 @@ func smallestK(arr []int, k int) []int {
 	if k == 0 {
 		return []int{}
 	}
-	quickSort3(arr, k, 0, len(arr)-1)
+	quickSort(arr, k, 0, len(arr)-1)
 	return arr[:k]
 }
 
-func quickSort1(arr []int, k, l, r int) {
-	i, j := l, r
-	if i >= j {
-		return
-	}
-
-	rnd := l + rand.Intn(r-l+1)
-	arr[l], arr[rnd] = arr[rnd], arr[l]
-
-	anchor := arr[i]
-
-	for i < j {
-		for i < j && arr[j] >= anchor {
-			j--
-		}
-
-		arr[i] = arr[j]
-
-		for i < j && arr[i] <= anchor {
-			i++
-		}
-
-		arr[j] = arr[i]
-	}
-
-	arr[i] = anchor
-
-	if i < k-1 {
-		quickSort1(arr, k, i+1, r)
-	}
-
-	if i > k {
-		quickSort1(arr, k, l, i-1)
-	}
-}
-
-func quickSort3(arr []int, k, left, right int) {
+func quickSort(arr []int, k, left, right int) {
 	if left >= right {
 		return
 	}
-	l, r := left, right
-	base := arr[l]
+	rnd := left + rand.Intn(right-left+1)
+	arr[left], arr[rnd] = arr[rnd], arr[left]
+
+	l, r, anchor := left, right, arr[left]
 	for l < r {
-		for l < r && arr[r] > base {
+		for l < r && arr[r] > anchor {
 			r--
 		}
-		arr[l] = arr[r]
-		for l < r && arr[l] <= base {
+		for l < r && arr[l] <= anchor {
 			l++
 		}
-		arr[r] = arr[l]
+		arr[l], arr[r] = arr[r], arr[l]
 	}
-	arr[r] = base
-	if r > k-1 {
-		quickSort1(arr, r-1, k, left)
-	} else if r < k-1 {
-		quickSort1(arr, right, k, r+1)
+	arr[left], arr[l] = arr[l], arr[left]
+	if l > k-1 {
+		quickSort(arr, k, left, l-1)
+	} else if l < k {
+		quickSort(arr, k, l+1, right)
 	}
 }
 
 // 另一种快排写法
 func quickSort2(arr []int, k, left, right int) {
-	if left > right {
+	l, r := left, right
+	if l >= r {
 		return
 	}
-	l, r, base := left+1, right, arr[left]
-	for l <= r {
-		for l <= r && arr[r] > base {
+	rnd := left + rand.Intn(right-left+1)
+	arr[left], arr[rnd] = arr[rnd], arr[left]
+	anchor := arr[l]
+	for l < r {
+		for l < r && arr[r] >= anchor {
 			r--
 		}
-		for l <= r && arr[l] <= base {
+		arr[l] = arr[r]
+		for l < r && arr[l] <= anchor {
 			l++
 		}
-		if l <= r {
-			arr[l], arr[r] = arr[r], arr[l]
-		}
+		arr[r] = arr[l]
 	}
-	arr[left], arr[r] = arr[r], base
-	if r > k-1 {
-		quickSort1(arr, r-1, k, left)
-	} else if r < k-1 {
-		quickSort1(arr, right, k, r+1)
+	arr[l] = anchor
+	if l < k-1 {
+		quickSort2(arr, k, l+1, right)
+	} else if l > k {
+		quickSort2(arr, k, left, l-1)
 	}
 }
