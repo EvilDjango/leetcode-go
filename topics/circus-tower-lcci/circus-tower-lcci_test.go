@@ -41,6 +41,11 @@ func test_bestSeqAtIndex(t *testing.T, function func(height []int, weight []int)
 			args{a, b},
 			185,
 		},
+		{
+			"",
+			args{[]int{1, 2, 2, 2, 3}, []int{4, 5, 6, 7, 8}},
+			3,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

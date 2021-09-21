@@ -88,21 +88,22 @@ func bestSeqAtIndex3(height []int, weight []int) int {
 	sort.Sort(t)
 	// minEnd[i]表示长度为i的子序列末尾元素的最小值
 	minEnd := make([][]int, n+1)
-	minEnd[0] = []int{0, 0}
 	maxLen := 0
 	for i := 0; i < n; i++ {
 		l, r := 1, maxLen
 		for l <= r {
 			mid := (r-l)/2 + l
-			if minEnd[mid][1] >= weight[i] && height[i] != minEnd[mid][0] {
+			if minEnd[mid][1] >= weight[i] {
 				r = mid - 1
 			} else {
 				l = mid + 1
 			}
 		}
-		if l > maxLen || height[i] != minEnd[l-1][0] {
-			minEnd[l] = []int{height[i], weight[i]}
+
+		if l > 1 && height[i] == minEnd[l-1][0] {
+			continue
 		}
+		minEnd[l] = []int{height[i], weight[i]}
 		if l > maxLen {
 			maxLen = l
 		}
@@ -120,7 +121,7 @@ func (t *TwoInts) Len() int {
 
 func (t *TwoInts) Less(i, j int) bool {
 	//if t.one[i] == t.one[j] {
-	//	return t.two[i] < t.two[j]
+	//	return t.two[i] > t.two[j]
 	//}
 	return t.one[i] < t.one[j]
 }
