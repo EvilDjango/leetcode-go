@@ -108,7 +108,7 @@ func Max(i, j int) int {
 //参考优秀题解做了优化，优化点有两个：
 //第一，使用一个long的前半段记录row，后半段记录col，从而使用一层map即可
 //第二，仅记录黑色网格，节省空间
-func printKMoves(K int) []string {
+func printKMoves2(K int) []string {
 	// 我们不能让x,y为负值，因为负值可能会占据int64超过一半的位，故x,y都初始化为K的最大值
 	x, y := int64(100000), int64(100000)
 	left, right, top, down := y, y, x, x
