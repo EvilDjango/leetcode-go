@@ -22,19 +22,18 @@ func search(arr []int, target int) int {
 	if len(arr) == 0 {
 		return -1
 	}
-	if arr[0] == target {
-		return 0
+	l, r := 0, len(arr)-1
+	// 若首尾有相同元素，跳过尾部的相同元素，因为首尾的相同元素会导致我们无法判断一个元素在分割点的哪一侧。这样处理过后，左侧的元素一定大于右侧的元素
+	if arr[0] == arr[r] {
+		for ; r >= 1 && arr[r] == arr[0]; r-- {
+			// empty body
+		}
 	}
 
-	l, r := 1, len(arr)-1
-	// 跳过开头的N个相同元素，N可能为1。这是为了避免首尾元素相同导致无法判断l,r是否在分割点同侧
-	for l <= r && arr[l] == arr[l-1] {
-		l++
-	}
 	for l <= r {
 		mid := (r-l)>>1 + l
 		// l,r在分割点同侧
-		if arr[l] < arr[r] {
+		if arr[l] <= arr[r] {
 			if arr[mid] >= target {
 				r = mid - 1
 			} else {
@@ -44,27 +43,58 @@ func search(arr []int, target int) int {
 		}
 		// l,r 在分割点异侧
 		// mid在分割点左侧
-		if arr[mid] >= arr[l] {
-			if arr[mid] < target {
-				l = mid + 1
-			} else if arr[l] > target {
-				l = mid + 1
-			} else {
+		if arr[mid] > arr[r] {
+			if arr[mid] >= target && arr[l] <= target {
 				r = mid - 1
+			} else {
+				l = mid + 1
 			}
 		} else {
 			// mid在分割点右侧
-			if arr[mid] >= target {
-				r = mid - 1
-			} else if arr[r] < target {
-				r = mid - 1
-			} else {
+			if arr[mid] < target && arr[r] >= target {
 				l = mid + 1
+			} else {
+				r = mid - 1
 			}
 		}
 	}
 	if l < len(arr) && arr[l] == target {
 		return l
+	}
+	return -1
+}
+
+func search2(arr []int, target int) int {
+	low, high := 0, len(arr)-1
+	for low <= high {
+		if arr[low] == target {
+			return low
+		}
+		pivot := (high-low)>>1 + low
+		if arr[pivot] == target {
+			high = pivot
+			continue
+		}
+
+		// pivot在左侧
+		if arr[pivot] > arr[high] {
+			if arr[pivot] > target && arr[low] <= target {
+				high = pivot - 1
+			} else {
+				low = pivot + 1
+			}
+			// pivot在右侧
+		} else if arr[pivot] < arr[high] {
+			if arr[pivot] < target && arr[high] >= target {
+				low = pivot + 1
+			} else {
+				high = pivot - 1
+			}
+			// 无法确定pivot在哪一边，只能忽略右界
+		} else {
+			low++
+			high--
+		}
 	}
 	return -1
 }
