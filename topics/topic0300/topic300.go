@@ -90,3 +90,89 @@ func lengthOfLIS2(nums []int) int {
 	}
 	return ans
 }
+
+// 深度遍历+记忆化
+func lengthOfLIS3(nums []int) int {
+	// 从各个位置出发能得到的最大递增子序列长度
+	maxLens := make([]int, len(nums))
+	for i := 0; i < len(nums); i++ {
+		dfs(nums, maxLens, i)
+	}
+	maxLen := 0
+	for _, length := range maxLens {
+		if length > maxLen {
+			maxLen = length
+		}
+	}
+	return maxLen
+}
+
+func dfs(nums []int, maxLens []int, i int) int {
+	if maxLens[i] > 0 {
+		return maxLens[i]
+	}
+	maxLen := 0
+	for j := i + 1; j < len(nums); j++ {
+		if nums[j] <= nums[i] {
+			continue
+		}
+		maxLen = max(maxLen, dfs(nums, maxLens, j))
+	}
+	maxLens[i] = maxLen + 1
+	return maxLen + 1
+}
+
+func max(i, j int) int {
+	if i > j {
+		return i
+	}
+	return j
+}
+
+// 动态规划
+func lengthOfLIS4(nums []int) int {
+	n := len(nums)
+	// dp[i]表示从下标i开始的最长递增子序列长度
+	dp := make([]int, n)
+	maxLen := 0
+	for i := n - 1; i >= 0; i-- {
+		forwardLen := 0
+		for j := i + 1; j < n; j++ {
+			if nums[j] <= nums[i] {
+				continue
+			}
+			forwardLen = max(forwardLen, dp[j])
+		}
+		dp[i] = forwardLen + 1
+		maxLen = max(maxLen, dp[i])
+	}
+	return maxLen
+}
+
+// 贪心算法
+func lengthOfLIS5(nums []int) int {
+	n := len(nums)
+	// minTail[i]表示长度为i的子序列末尾的最小值
+	minTail := make([]int, n+1)
+	minTail[1] = nums[0]
+	maxLen := 1
+	for i := 1; i < n; i++ {
+		length := search(minTail, 1, maxLen, nums[i]) + 1
+		minTail[length] = nums[i]
+		maxLen = max(maxLen, length)
+	}
+	return maxLen
+}
+
+// 在nums的 [l,r)区间搜索最后一个小于target的元素返回其下标
+func search(nums []int, l, r, target int) int {
+	for l <= r {
+		mid := (r-l)>>1 + l
+		if nums[mid] >= target {
+			r = mid - 1
+		} else {
+			l = mid + 1
+		}
+	}
+	return r
+}
