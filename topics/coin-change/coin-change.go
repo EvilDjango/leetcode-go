@@ -46,20 +46,16 @@ import "fmt"
 func coinChange(coins []int, amount int) int {
 	dp := make([]int, amount+1)
 	for i := 1; i < amount+1; i++ {
-		dp[i] = -1
+		dp[i] = amount + 1
 	}
 	for i := 0; i < len(coins); i++ {
 		for j := 0; j+coins[i] <= amount; j++ {
-			if dp[j] == -1 {
-				continue
-			}
-			if dp[j+coins[i]] == -1 {
-				dp[j+coins[i]] = dp[j] + 1
-			} else {
-				dp[j+coins[i]] = min(dp[j+coins[i]], dp[j]+1)
-			}
+			dp[j+coins[i]] = min(dp[j+coins[i]], dp[j]+1)
 		}
 		fmt.Println()
+	}
+	if dp[amount] == amount+1 {
+		return -1
 	}
 	return dp[amount]
 
