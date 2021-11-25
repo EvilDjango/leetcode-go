@@ -220,9 +220,9 @@ func extremeWithoutOne(nums []int, min bool) []int {
 	return ret
 }
 
-func EqualIgnoreOrder(slice1, slice2 interface{}) bool {
-	a, _ := CreateAnyTypeSlice(slice1)
-	b, _ := CreateAnyTypeSlice(slice2)
+func EqualIgnoreOrder(base, slice interface{}) bool {
+	a, _ := CreateAnyTypeSlice(base)
+	b, _ := CreateAnyTypeSlice(slice)
 	if len(a) != len(b) {
 		return false
 	}
