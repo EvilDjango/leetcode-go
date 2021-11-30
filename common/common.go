@@ -3,6 +3,8 @@ package common
 import (
 	"math"
 	"reflect"
+	"strconv"
+	"strings"
 )
 
 /*
@@ -220,25 +222,23 @@ func extremeWithoutOne(nums []int, min bool) []int {
 	return ret
 }
 
-func EqualIgnoreOrder(base, slice interface{}) bool {
-	a, _ := CreateAnyTypeSlice(base)
-	b, _ := CreateAnyTypeSlice(slice)
+func EqualIgnoreOrder(want, actual interface{}) bool {
+	a, _ := CreateAnyTypeSlice(want)
+	b, _ := CreateAnyTypeSlice(actual)
 	if len(a) != len(b) {
 		return false
 	}
+	count := map[interface{}]int{}
 	for _, x := range a {
-		found := false
-		for _, y := range b {
-			if x == y {
-				found = true
-				break
-			}
-		}
-		if !found {
-			return false
+		count[x]++
+	}
+	for _, x := range b {
+		count[x]--
+		if count[x] == 0 {
+			delete(count, x)
 		}
 	}
-	return true
+	return len(count) == 0
 }
 
 func isSlice(arg interface{}) (val reflect.Value, ok bool) {
@@ -287,4 +287,30 @@ func ArrayEqual(a, b []int) bool {
 		}
 	}
 	return true
+}
+
+func TwoDimensionArrayEqualsIgnoreOrder(a, b [][]int) bool {
+	if len(a) != len(b) {
+		return false
+	}
+	count := map[string]int{}
+	for _, arr := range a {
+		count[ints2String(arr)]++
+	}
+	for _, arr := range b {
+		key := ints2String(arr)
+		count[key]--
+		if count[key] == 0 {
+			delete(count, key)
+		}
+	}
+	return len(count) == 0
+}
+
+func ints2String(a []int) string {
+	builder := strings.Builder{}
+	for _, x := range a {
+		builder.WriteString(strconv.Itoa(x))
+	}
+	return builder.String()
 }
