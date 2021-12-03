@@ -83,6 +83,20 @@ func (t *TreeNode) Equals(q *TreeNode) bool {
 	return t.Left.Equals(q.Left) && t.Right.Equals(q.Right)
 }
 
+func (t *TreeNode) GetChild(val int) *TreeNode {
+	if t == nil {
+		return nil
+	}
+	if t.Val == val {
+		return t
+	}
+	child := t.Left.GetChild(val)
+	if child != nil {
+		return child
+	}
+	return t.Right.GetChild(val)
+}
+
 func New(nums ...int) *TreeNode {
 	n := len(nums)
 	if n == 0 || nums[0] == None {
