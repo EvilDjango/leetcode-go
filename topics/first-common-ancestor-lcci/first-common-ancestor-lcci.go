@@ -31,7 +31,7 @@
 package first_common_ancestor_lcci
 
 import (
-	"leetcode-go/container/tree"
+	"leetcode-go/tree"
 )
 
 func lowestCommonAncestor(root *tree.TreeNode, p *tree.TreeNode, q *tree.TreeNode) *tree.TreeNode {

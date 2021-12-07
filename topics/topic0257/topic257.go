@@ -2,7 +2,7 @@ package topic0257
 
 import (
 	"bytes"
-	"leetcode-go/container/tree"
+	"leetcode-go/tree"
 	"strconv"
 )
 

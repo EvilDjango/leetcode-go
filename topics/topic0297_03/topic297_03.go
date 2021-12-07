@@ -1,7 +1,7 @@
 package topic0297_03
 
 import (
-	"leetcode-go/container/tree"
+	"leetcode-go/tree"
 	"strconv"
 	"strings"
 )
@@ -47,11 +47,11 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 */
 
 /**
- * Definition for a binary container node.
- * type container.TreeNode struct {
+ * Definition for a binary tree node.
+ * type tree.TreeNode struct {
  *     Val int
- *     Left *container.TreeNode
- *     Right *container.TreeNode
+ *     Left *tree.TreeNode
+ *     Right *tree.TreeNode
  * }
  */
 
@@ -67,7 +67,7 @@ func Constructor() Codec {
 	return Codec{}
 }
 
-// Serializes a container to a single string.
+// Serializes a tree to a single string.
 func (this *Codec) serialize(root *tree.TreeNode) string {
 	if root == nil {
 		return string(Null)
@@ -84,7 +84,7 @@ func (this *Codec) serialize(root *tree.TreeNode) string {
 	return builder.String()
 }
 
-// Deserializes your encoded data to container.
+// Deserializes your encoded data to tree.
 func (this *Codec) deserialize(data string) *tree.TreeNode {
 	var parse func() *tree.TreeNode
 	i := 0

@@ -21,7 +21,7 @@
 package binode_lcci
 
 import (
-	"leetcode-go/container"
+	"leetcode-go/tree"
 )
 
 // 递归解法

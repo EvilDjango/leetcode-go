@@ -1,7 +1,7 @@
 package topic0270
 
 import (
-	"leetcode-go/container/tree"
+	"leetcode-go/tree"
 	"math"
 )
 

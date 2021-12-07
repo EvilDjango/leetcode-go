@@ -24,7 +24,7 @@
 package legal_binary_search_tree_lcci
 
 import (
-	"leetcode-go/container/tree"
+	"leetcode-go/tree"
 	"math"
 )
 

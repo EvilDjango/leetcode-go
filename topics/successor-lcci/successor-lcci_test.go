@@ -5,7 +5,7 @@
 package successor_lcci
 
 import (
-	"leetcode-go/container/tree"
+	"leetcode-go/tree"
 	"reflect"
 	"testing"
 )

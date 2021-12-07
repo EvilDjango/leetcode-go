@@ -44,47 +44,47 @@ package topic0307_05
 //
 //// 线段树
 //type NumArray struct {
-//	container []int
+//	tree []int
 //}
 //
 //func Constructor(nums []int) NumArray {
-//	container := make([]int, len(nums)<<1)
-//	buildTree(container, nums)
-//	return NumArray{container}
+//	tree := make([]int, len(nums)<<1)
+//	buildTree(tree, nums)
+//	return NumArray{tree}
 //}
 //
-//func buildTree(container, nums []int) {
+//func buildTree(tree, nums []int) {
 //	n := len(nums)
 //	for i := 0; i < n; i++ {
-//		container[i+n] = nums[i]
+//		tree[i+n] = nums[i]
 //	}
 //	for i := n - 1; i > 0; i-- {
-//		container[i] = container[i<<1] + container[(i<<1)+1]
+//		tree[i] = tree[i<<1] + tree[(i<<1)+1]
 //	}
 //}
 //
 //func (this *NumArray) Update(index int, val int) {
-//	n := len(this.container) >> 1
+//	n := len(this.tree) >> 1
 //	index += n
-//	increment := val - this.container[index]
+//	increment := val - this.tree[index]
 //	for index > 0 {
-//		this.container[index] += increment
+//		this.tree[index] += increment
 //		index >>= 1
 //	}
 //}
 //
 //func (this *NumArray) SumRange(left int, right int) int {
-//	n := len(this.container) >> 1
+//	n := len(this.tree) >> 1
 //	left += n
 //	right += n
 //	sum := 0
 //	for left <= right {
 //		if left&1 == 1 {
-//			sum += this.container[left]
+//			sum += this.tree[left]
 //			left++
 //		}
 //		if right&1 == 0 {
-//			sum += this.container[right]
+//			sum += this.tree[right]
 //			right--
 //		}
 //		left >>= 1

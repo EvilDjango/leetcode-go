@@ -31,7 +31,7 @@
 // @create 12/1/21 12:55 PM
 package successor_lcci
 
-import "leetcode-go/container"
+import "leetcode-go/tree"
 
 // 把root当成一个普通二叉树来进行中序遍历，循环
 func inorderSuccessor(root *TreeNode, p *TreeNode) *TreeNode {

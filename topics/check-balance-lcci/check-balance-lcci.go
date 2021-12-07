@@ -27,7 +27,7 @@
 package check_balance_lcci
 
 import (
-	"leetcode-go/container/tree"
+	"leetcode-go/tree"
 	"math"
 )
 

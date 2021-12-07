@@ -5,8 +5,8 @@
 //
 //示例 1:
 //
-//输入: num = "8733", words = ["container", "used"]
-//输出: ["container", "used"]
+//输入: num = "8733", words = ["tree", "used"]
+//输出: ["tree", "used"]
 //示例 2:
 //
 //输入: num = "2", words = ["a", "b", "c", "d"]

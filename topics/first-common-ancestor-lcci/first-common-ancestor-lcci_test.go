@@ -5,7 +5,7 @@
 package first_common_ancestor_lcci
 
 import (
-	"leetcode-go/container/tree"
+	"leetcode-go/tree"
 	"reflect"
 	"testing"
 )
