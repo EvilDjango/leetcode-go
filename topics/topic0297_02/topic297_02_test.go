@@ -1,7 +1,7 @@
 package topic0297_02
 
 import (
-	"leetcode-go/topics"
+	"leetcode-go/tree"
 	"reflect"
 	"testing"
 )
@@ -16,7 +16,7 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 
 func TestCodec_serialize_and_deserialize(t *testing.T) {
 	type args struct {
-		root *topics.TreeNode
+		root *tree.TreeNode
 	}
 	tests := []struct {
 		name string
@@ -25,12 +25,12 @@ func TestCodec_serialize_and_deserialize(t *testing.T) {
 	}{
 		{
 			"",
-			args{topics.New(1, 2, 3, 4, topics.None, 5, 6)},
+			args{tree.New(1, 2, 3, 4, tree.None, 5, 6)},
 			"1|2|4||||3|5|||6||",
 		},
 		{
 			"",
-			args{topics.New(1, 2, 3)},
+			args{tree.New(1, 2, 3)},
 			"1|2|||3||",
 		},
 	}

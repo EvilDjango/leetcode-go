@@ -6,7 +6,7 @@ package bst_sequences_lcci
 
 import (
 	"leetcode-go/common"
-	"leetcode-go/topics"
+	"leetcode-go/tree"
 	"testing"
 )
 
@@ -22,9 +22,9 @@ func TestBSTSequences3(t *testing.T) {
 	test(t, BSTSequences3)
 }
 
-func test(t *testing.T, function func(root *topics.TreeNode) [][]int) {
+func test(t *testing.T, function func(root *tree.TreeNode) [][]int) {
 	type args struct {
-		root *topics.TreeNode
+		root *tree.TreeNode
 	}
 	tests := []struct {
 		name string
@@ -33,12 +33,12 @@ func test(t *testing.T, function func(root *topics.TreeNode) [][]int) {
 	}{
 		{
 			"",
-			args{topics.New(1, 2)},
+			args{tree.New(1, 2)},
 			[][]int{{1, 2}},
 		},
 		{
 			"",
-			args{topics.New(2, 1, 3)},
+			args{tree.New(2, 1, 3)},
 			[][]int{{2, 3, 1}, {2, 1, 3}},
 		},
 	}

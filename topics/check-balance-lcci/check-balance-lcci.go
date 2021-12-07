@@ -27,14 +27,14 @@
 package check_balance_lcci
 
 import (
-	"leetcode-go/topics"
+	"leetcode-go/tree"
 	"math"
 )
 
-func isBalanced(root *topics.TreeNode) bool {
+func isBalanced(root *tree.TreeNode) bool {
 	balanced := true
-	var getHeight func(root *topics.TreeNode) int
-	getHeight = func(root *topics.TreeNode) int {
+	var getHeight func(root *tree.TreeNode) int
+	getHeight = func(root *tree.TreeNode) int {
 		if root == nil || !balanced {
 			return 0
 		}

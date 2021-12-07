@@ -1,7 +1,7 @@
 package topic0285
 
 import (
-	"leetcode-go/topics"
+	"leetcode-go/tree"
 )
 
 /*
@@ -40,9 +40,9 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 @createTime   8/13/21 11:07 AM
 */
 
-func inorderSuccessor(root *topics.TreeNode, p *topics.TreeNode) *topics.TreeNode {
-	var prev *topics.TreeNode
-	var stack []*topics.TreeNode
+func inorderSuccessor(root *tree.TreeNode, p *tree.TreeNode) *tree.TreeNode {
+	var prev *tree.TreeNode
+	var stack []*tree.TreeNode
 	for len(stack) > 0 || root != nil {
 		if root != nil {
 			stack = append(stack, root)
@@ -61,7 +61,7 @@ func inorderSuccessor(root *topics.TreeNode, p *topics.TreeNode) *topics.TreeNod
 }
 
 // 利用二叉搜索树进行二分搜索
-func inorderSuccessor2(root *topics.TreeNode, p *topics.TreeNode) *topics.TreeNode {
+func inorderSuccessor2(root *tree.TreeNode, p *tree.TreeNode) *tree.TreeNode {
 	if p.Right != nil {
 		left := p.Right
 		for left.Left != nil {
@@ -69,7 +69,7 @@ func inorderSuccessor2(root *topics.TreeNode, p *topics.TreeNode) *topics.TreeNo
 		}
 		return left
 	}
-	var prev *topics.TreeNode
+	var prev *tree.TreeNode
 	for root != p {
 		if root.Val > p.Val {
 			prev = root

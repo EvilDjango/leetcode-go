@@ -5,7 +5,7 @@
 package successor_lcci
 
 import (
-	"leetcode-go/topics"
+	"leetcode-go/tree"
 	"reflect"
 	"testing"
 )
@@ -23,18 +23,18 @@ func Test_inorderSuccessor4(t *testing.T) {
 	test(t, inorderSuccessor4)
 }
 
-func test(t *testing.T, function func(root *topics.TreeNode, p *topics.TreeNode) *topics.TreeNode) {
-	root := topics.New(2, topics.None, 3)
+func test(t *testing.T, function func(root *tree.TreeNode, p *tree.TreeNode) *tree.TreeNode) {
+	root := tree.New(2, tree.None, 3)
 	p := root.GetChild(2)
 	target := root.GetChild(3)
 	type args struct {
-		root *topics.TreeNode
-		p    *topics.TreeNode
+		root *tree.TreeNode
+		p    *tree.TreeNode
 	}
 	tests := []struct {
 		name string
 		args args
-		want *topics.TreeNode
+		want *tree.TreeNode
 	}{
 		{
 			"",

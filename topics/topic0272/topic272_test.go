@@ -2,7 +2,7 @@ package topic0272
 
 import (
 	"leetcode-go/common"
-	"leetcode-go/topics"
+	"leetcode-go/tree"
 	"testing"
 )
 
@@ -22,9 +22,9 @@ func Test_closestKValues2(t *testing.T) {
 	test_closestKValues(t, closestKValues2)
 }
 
-func test_closestKValues(t *testing.T, function func(root *topics.TreeNode, target float64, k int) []int) {
+func test_closestKValues(t *testing.T, function func(root *tree.TreeNode, target float64, k int) []int) {
 	type args struct {
-		root   *topics.TreeNode
+		root   *tree.TreeNode
 		target float64
 		k      int
 	}
@@ -35,7 +35,7 @@ func test_closestKValues(t *testing.T, function func(root *topics.TreeNode, targ
 	}{
 		{
 			"",
-			args{topics.New(4, 2, 5, 1, 3), 3.714286, 2},
+			args{tree.New(4, 2, 5, 1, 3), 3.714286, 2},
 			[]int{3, 4},
 		},
 	}

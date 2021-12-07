@@ -2,7 +2,7 @@ package topic0297
 
 import (
 	"bytes"
-	"leetcode-go/topics"
+	"leetcode-go/tree"
 	"strconv"
 	"strings"
 )
@@ -69,11 +69,11 @@ func Constructor() Codec {
 }
 
 // Serializes a tree to a single string.
-func (this *Codec) serialize(root *topics.TreeNode) string {
+func (this *Codec) serialize(root *tree.TreeNode) string {
 	buf := bytes.Buffer{}
 	buf.WriteString(toString(root))
 	buf.WriteString(Sep)
-	var q []*topics.TreeNode
+	var q []*tree.TreeNode
 	if root != nil {
 		q = append(q, root)
 	}
@@ -99,11 +99,11 @@ func (this *Codec) serialize(root *topics.TreeNode) string {
 }
 
 // Deserializes your encoded data to tree.
-func (this *Codec) deserialize(data string) *topics.TreeNode {
+func (this *Codec) deserialize(data string) *tree.TreeNode {
 	vals := strings.Split(data, Sep)
 	root := parseNode(vals[0])
 	i := 1
-	var q []*topics.TreeNode
+	var q []*tree.TreeNode
 	if root != nil {
 		q = append(q, root)
 	}
@@ -131,7 +131,7 @@ func (this *Codec) deserialize(data string) *topics.TreeNode {
 	return root
 }
 
-func parseNode(s string) *topics.TreeNode {
+func parseNode(s string) *tree.TreeNode {
 	if s == Null {
 		return nil
 	}
@@ -139,10 +139,10 @@ func parseNode(s string) *topics.TreeNode {
 	if err != nil {
 		panic("invalid data. want digit, got " + s)
 	}
-	return &topics.TreeNode{Val: val}
+	return &tree.TreeNode{Val: val}
 }
 
-func toString(node *topics.TreeNode) string {
+func toString(node *tree.TreeNode) string {
 	if node == nil {
 		return Null
 	}

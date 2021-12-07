@@ -31,10 +31,10 @@
 package first_common_ancestor_lcci
 
 import (
-	"leetcode-go/topics"
+	"leetcode-go/tree"
 )
 
-func lowestCommonAncestor(root *topics.TreeNode, p *topics.TreeNode, q *topics.TreeNode) *topics.TreeNode {
+func lowestCommonAncestor(root *tree.TreeNode, p *tree.TreeNode, q *tree.TreeNode) *tree.TreeNode {
 	path1 := getPath(root, p)
 	path2 := getPath(root, q)
 	minLen := len(path1)
@@ -48,11 +48,11 @@ func lowestCommonAncestor(root *topics.TreeNode, p *topics.TreeNode, q *topics.T
 	return path1[i-1]
 }
 
-func getPath(root, target *topics.TreeNode) []*topics.TreeNode {
+func getPath(root, target *tree.TreeNode) []*tree.TreeNode {
 	if root == nil {
 		return nil
 	}
-	path := []*topics.TreeNode{root}
+	path := []*tree.TreeNode{root}
 	if root == target {
 		return path
 	}
@@ -66,7 +66,7 @@ func getPath(root, target *topics.TreeNode) []*topics.TreeNode {
 	return nil
 }
 
-func lowestCommonAncestor2(root *topics.TreeNode, p *topics.TreeNode, q *topics.TreeNode) *topics.TreeNode {
+func lowestCommonAncestor2(root *tree.TreeNode, p *tree.TreeNode, q *tree.TreeNode) *tree.TreeNode {
 	if root == nil {
 		return nil
 	}

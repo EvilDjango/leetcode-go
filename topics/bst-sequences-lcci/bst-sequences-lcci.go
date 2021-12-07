@@ -23,18 +23,18 @@ package bst_sequences_lcci
 
 import (
 	"container/list"
-	"leetcode-go/topics"
+	"leetcode-go/tree"
 )
 
 // 每次选取一个叶子节点，最后将得到的数组反转即可。这个解法过于复杂。还是下面正序选取节点的方法更好。
-func BSTSequences(root *topics.TreeNode) [][]int {
+func BSTSequences(root *tree.TreeNode) [][]int {
 	if root == nil {
 		return [][]int{{}}
 	}
-	q := []*topics.TreeNode{root}
-	ancestors := map[*topics.TreeNode]*topics.TreeNode{}
-	childCount := map[*topics.TreeNode]int{}
-	var leaves []*topics.TreeNode
+	q := []*tree.TreeNode{root}
+	ancestors := map[*tree.TreeNode]*tree.TreeNode{}
+	childCount := map[*tree.TreeNode]int{}
+	var leaves []*tree.TreeNode
 	count := 0
 	for len(q) > 0 {
 		size := len(q)
@@ -62,7 +62,7 @@ func BSTSequences(root *topics.TreeNode) [][]int {
 	return arrays
 }
 
-func backtrack(leaves []*topics.TreeNode, ancestors map[*topics.TreeNode]*topics.TreeNode, childCount map[*topics.TreeNode]int, arrays *[][]int, arr []int) {
+func backtrack(leaves []*tree.TreeNode, ancestors map[*tree.TreeNode]*tree.TreeNode, childCount map[*tree.TreeNode]int, arrays *[][]int, arr []int) {
 	if len(leaves) == 0 {
 		a := make([]int, len(arr))
 		copy(a, arr)
@@ -77,7 +77,7 @@ func backtrack(leaves []*topics.TreeNode, ancestors map[*topics.TreeNode]*topics
 	}
 
 	for i, leaf := range leaves {
-		newLeaves := make([]*topics.TreeNode, len(leaves))
+		newLeaves := make([]*tree.TreeNode, len(leaves))
 		copy(newLeaves, leaves)
 		newLeaves = append(newLeaves[:i], newLeaves[i+1:]...)
 		ancestor := ancestors[leaf]
@@ -90,13 +90,13 @@ func backtrack(leaves []*topics.TreeNode, ancestors map[*topics.TreeNode]*topics
 	}
 }
 
-func BSTSequences2(root *topics.TreeNode) [][]int {
+func BSTSequences2(root *tree.TreeNode) [][]int {
 	if root == nil {
 		return [][]int{{}}
 	}
 	var ans [][]int
 	var path []int
-	candidates := []*topics.TreeNode{root}
+	candidates := []*tree.TreeNode{root}
 	var dfs func()
 	dfs = func() {
 		if len(candidates) == 0 {
@@ -127,7 +127,7 @@ func BSTSequences2(root *topics.TreeNode) [][]int {
 }
 
 // 思路和解法2一样，区别在于这里使用链表
-func BSTSequences3(root *topics.TreeNode) [][]int {
+func BSTSequences3(root *tree.TreeNode) [][]int {
 	if root == nil {
 		return [][]int{{}}
 	}
@@ -145,7 +145,7 @@ func BSTSequences3(root *topics.TreeNode) [][]int {
 		}
 		length := candidates.Len()
 		for i := 0; i < length; i++ {
-			node := candidates.Remove(candidates.Front()).(*topics.TreeNode)
+			node := candidates.Remove(candidates.Front()).(*tree.TreeNode)
 			if node.Left != nil {
 				candidates.PushBack(node.Left)
 			}
