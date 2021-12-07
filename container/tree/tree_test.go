@@ -103,7 +103,7 @@ func TestRandom(t *testing.T) {
 			root, size := Random(100)
 			realSize := root.Len()
 			if realSize != size {
-				t.Errorf("Random tree size = %v, want %v", realSize, size)
+				t.Errorf("Random container size = %v, want %v", realSize, size)
 			}
 		})
 	}

@@ -2,7 +2,7 @@ package topic0298
 
 import (
 	"leetcode-go/common"
-	"leetcode-go/tree"
+	"leetcode-go/container"
 )
 
 /*

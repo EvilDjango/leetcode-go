@@ -23,7 +23,7 @@ package bst_sequences_lcci
 
 import (
 	"container/list"
-	"leetcode-go/tree"
+	"leetcode-go/container/tree"
 )
 
 // 每次选取一个叶子节点，最后将得到的数组反转即可。这个解法过于复杂。还是下面正序选取节点的方法更好。

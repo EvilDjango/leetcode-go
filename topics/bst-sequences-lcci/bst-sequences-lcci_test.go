@@ -6,7 +6,7 @@ package bst_sequences_lcci
 
 import (
 	"leetcode-go/common"
-	"leetcode-go/tree"
+	"leetcode-go/container/tree"
 	"testing"
 )
 

@@ -39,18 +39,18 @@
 // @create 12/7/21 3:18 PM
 package linked_list_cycle_lcci
 
-type ListNode struct {
-	Val  int
-	Next *ListNode
-}
+import . "leetcode-go/container/linklist"
 
 func detectCycle(head *ListNode) *ListNode {
 	slow, fast := head, head
-	for fast != nil && slow != fast {
+	for fast != nil {
 		slow = slow.Next
 		fast = fast.Next
 		if fast != nil {
 			fast = fast.Next
+		}
+		if fast == slow {
+			break
 		}
 	}
 	if fast == nil {

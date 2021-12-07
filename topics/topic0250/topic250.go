@@ -1,7 +1,7 @@
 package topic0250
 
 import (
-	"leetcode-go/tree"
+	"leetcode-go/container/tree"
 )
 
 /*
