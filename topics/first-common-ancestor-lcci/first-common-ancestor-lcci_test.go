@@ -5,7 +5,7 @@
 package first_common_ancestor_lcci
 
 import (
-	"leetcode-go/tree"
+	"leetcode-go/topics"
 	"reflect"
 	"testing"
 )
@@ -18,19 +18,19 @@ func Test_lowestCommonAncestor2(t *testing.T) {
 	test(t, lowestCommonAncestor2)
 }
 
-func test(t *testing.T, function func(root *tree.TreeNode, p *tree.TreeNode, q *tree.TreeNode) *tree.TreeNode) {
-	root := tree.New(3, 5, 1, 6, 2, 0, 8, tree.None, tree.None, 7, 4)
+func test(t *testing.T, function func(root *topics.TreeNode, p *topics.TreeNode, q *topics.TreeNode) *topics.TreeNode) {
+	root := topics.New(3, 5, 1, 6, 2, 0, 8, topics.None, topics.None, 7, 4)
 	p := root.GetChild(5)
 	q := root.GetChild(4)
 	type args struct {
-		root *tree.TreeNode
-		p    *tree.TreeNode
-		q    *tree.TreeNode
+		root *topics.TreeNode
+		p    *topics.TreeNode
+		q    *topics.TreeNode
 	}
 	tests := []struct {
 		name string
 		args args
-		want *tree.TreeNode
+		want *topics.TreeNode
 	}{
 		{
 			"",

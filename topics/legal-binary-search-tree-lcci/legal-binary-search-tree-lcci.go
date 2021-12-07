@@ -24,15 +24,15 @@
 package legal_binary_search_tree_lcci
 
 import (
-	"leetcode-go/tree"
+	"leetcode-go/topics"
 	"math"
 )
 
-func isValidBST(root *tree.TreeNode) bool {
+func isValidBST(root *topics.TreeNode) bool {
 	return isValid(root, math.MaxInt64, math.MinInt64)
 }
 
-func isValid(root *tree.TreeNode, ceiling, floor int) bool {
+func isValid(root *topics.TreeNode, ceiling, floor int) bool {
 	if root == nil {
 		return true
 	}

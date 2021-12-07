@@ -2,7 +2,7 @@ package topic0272
 
 import (
 	"leetcode-go/common"
-	"leetcode-go/tree"
+	"leetcode-go/topics"
 	"math"
 )
 
@@ -37,10 +37,10 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 */
 
 // 中序遍历得到上升序列，双指针法从最接近target的地方依次向两边扩展
-func closestKValues(root *tree.TreeNode, target float64, k int) []int {
+func closestKValues(root *topics.TreeNode, target float64, k int) []int {
 	// 首先进行中序遍历得到升序数组
 	var nums []int
-	var stack []*tree.TreeNode
+	var stack []*topics.TreeNode
 	for len(stack) > 0 || root != nil {
 		if root != nil {
 			stack = append(stack, root)
@@ -73,9 +73,9 @@ func closestKValues(root *tree.TreeNode, target float64, k int) []int {
 // 中序遍历的同时进行收集k个元素的任务
 // 显然k个元素一定是连续的，那么我们可以维护一个长度为k的滑动窗口，当窗口中的元素少于k时，扩展窗口。元素数量已经等于k时，
 //如果下一个元素比窗口最左端的元素更靠近target，窗口右移一位，否则说明已经找到了最靠近的k个元素
-func closestKValues2(root *tree.TreeNode, target float64, k int) []int {
+func closestKValues2(root *topics.TreeNode, target float64, k int) []int {
 	var ans []int
-	var stack []*tree.TreeNode
+	var stack []*topics.TreeNode
 	for len(stack) > 0 || root != nil {
 		if root != nil {
 			stack = append(stack, root)

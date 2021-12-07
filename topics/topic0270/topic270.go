@@ -1,7 +1,7 @@
 package topic0270
 
 import (
-	"leetcode-go/tree"
+	"leetcode-go/topics"
 	"math"
 )
 
@@ -31,7 +31,7 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 @createTime   8/4/21 4:57 PM
 */
 // dfs
-func closestValue(root *tree.TreeNode, target float64) int {
+func closestValue(root *topics.TreeNode, target float64) int {
 	v := float64(root.Val)
 	diff := math.Abs(target - v)
 	if v > target {
@@ -53,10 +53,10 @@ func closestValue(root *tree.TreeNode, target float64) int {
 }
 
 // dfs
-func closestValue2(root *tree.TreeNode, target float64) int {
+func closestValue2(root *topics.TreeNode, target float64) int {
 	ans := root.Val
-	var dfs func(root *tree.TreeNode)
-	dfs = func(root *tree.TreeNode) {
+	var dfs func(root *topics.TreeNode)
+	dfs = func(root *topics.TreeNode) {
 		if root == nil {
 			return
 		}
@@ -78,8 +78,8 @@ func closestValue2(root *tree.TreeNode, target float64) int {
 }
 
 // 迭代，中序遍历
-func closestValue3(root *tree.TreeNode, target float64) int {
-	var stack []*tree.TreeNode
+func closestValue3(root *topics.TreeNode, target float64) int {
+	var stack []*topics.TreeNode
 	cur, prev := root.Val, root.Val
 	for root != nil || len(stack) > 0 {
 		if root != nil {
@@ -103,7 +103,7 @@ func closestValue3(root *tree.TreeNode, target float64) int {
 }
 
 // 迭代，二分查找
-func closestValue4(root *tree.TreeNode, target float64) int {
+func closestValue4(root *topics.TreeNode, target float64) int {
 	ans := root.Val
 	for root != nil {
 		v := float64(root.Val)

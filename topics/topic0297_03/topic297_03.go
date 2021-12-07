@@ -1,7 +1,7 @@
 package topic0297_03
 
 import (
-	"leetcode-go/tree"
+	"leetcode-go/topics"
 	"strconv"
 	"strings"
 )
@@ -68,7 +68,7 @@ func Constructor() Codec {
 }
 
 // Serializes a tree to a single string.
-func (this *Codec) serialize(root *tree.TreeNode) string {
+func (this *Codec) serialize(root *topics.TreeNode) string {
 	if root == nil {
 		return string(Null)
 	}
@@ -85,15 +85,15 @@ func (this *Codec) serialize(root *tree.TreeNode) string {
 }
 
 // Deserializes your encoded data to tree.
-func (this *Codec) deserialize(data string) *tree.TreeNode {
-	var parse func() *tree.TreeNode
+func (this *Codec) deserialize(data string) *topics.TreeNode {
+	var parse func() *topics.TreeNode
 	i := 0
-	parse = func() *tree.TreeNode {
+	parse = func() *topics.TreeNode {
 		if data[i] == Null {
 			i++
 			return nil
 		}
-		node := &tree.TreeNode{}
+		node := &topics.TreeNode{}
 		i++
 		node.Left = parse()
 		i++

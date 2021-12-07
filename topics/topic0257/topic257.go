@@ -2,7 +2,7 @@ package topic0257
 
 import (
 	"bytes"
-	"leetcode-go/tree"
+	"leetcode-go/topics"
 	"strconv"
 )
 
@@ -33,13 +33,13 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
 */
 
 // dfs
-func binaryTreePaths(root *tree.TreeNode) []string {
+func binaryTreePaths(root *topics.TreeNode) []string {
 	var ans []string
 	findPath(root, bytes.Buffer{}, &ans)
 	return ans
 }
 
-func findPath(root *tree.TreeNode, buffer bytes.Buffer, paths *[]string) {
+func findPath(root *topics.TreeNode, buffer bytes.Buffer, paths *[]string) {
 	if root == nil {
 		return
 	}
@@ -58,9 +58,9 @@ func findPath(root *tree.TreeNode, buffer bytes.Buffer, paths *[]string) {
 }
 
 // 广度优先遍历
-func binaryTreePaths2(root *tree.TreeNode) []string {
+func binaryTreePaths2(root *topics.TreeNode) []string {
 	type myNode struct {
-		cur       *tree.TreeNode
+		cur       *topics.TreeNode
 		ancestors string
 	}
 	var ans []string
