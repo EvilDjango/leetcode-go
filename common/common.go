@@ -314,3 +314,9 @@ func ints2String(a []int) string {
 	}
 	return builder.String()
 }
+
+func FloatEquals(a, b float64, decimals int) bool {
+	multiple := math.Pow(10, float64(decimals))
+	x, y := int(a*multiple+0.5), int(b*multiple+0.5)
+	return x == y
+}
