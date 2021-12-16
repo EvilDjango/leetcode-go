@@ -51,6 +51,10 @@
 // @create 12/14/21 6:38 PM
 package zlDJc7
 
+import (
+	"container/heap"
+)
+
 // 广度优先遍历
 func openLock(deadends []string, target string) int {
 	dead := map[string]bool{}
@@ -90,13 +94,13 @@ func openLock(deadends []string, target string) int {
 // 深度优先遍历
 //todo 这种做法虽然效率不高，但理论上是可行的。可是目前还无法ac，后面有时间改改。
 func openLock2(deadends []string, target string) int {
-	cache := map[string]int{target: 0}
-	for _, v := range deadends {
-		cache[v] = -1
-	}
 	start := "0000"
 	if start == target {
 		return 0
+	}
+	cache := map[string]int{target: 0}
+	for _, v := range deadends {
+		cache[v] = -1
 	}
 	if cache[start] == -1 {
 		return -1
@@ -184,4 +188,80 @@ func next(s string) []string {
 		ret = append(ret, string(down))
 	}
 	return ret
+}
+
+type astar struct {
+	g, h   int
+	status string
+}
+
+type hp []astar
+
+func (h *hp) Len() int {
+	return len(*h)
+}
+func (h *hp) Less(i, j int) bool {
+	a, b := (*h)[i], (*h)[j]
+	return a.g+a.h < b.g+b.h
+}
+func (h *hp) Swap(i, j int) {
+	x := *h
+	x[i], x[j] = x[j], x[i]
+}
+
+func (h *hp) Push(x interface{}) {
+	*h = append(*h, x.(astar))
+}
+
+func (h *hp) Pop() interface{} {
+	x := (*h)[len(*h)-1]
+	*h = (*h)[:len(*h)-1]
+	return x
+}
+
+// 启发式搜索
+func openLock4(deadends []string, target string) int {
+	start := "0000"
+	if start == target {
+		return 0
+	}
+	visited := map[string]bool{}
+	for _, s := range deadends {
+		visited[s] = true
+	}
+	if visited[start] {
+		return -1
+	}
+
+	getH := func(s string) int {
+		ret := 0
+		for i := 0; i < 4; i++ {
+			dis := int(s[i]) - int(target[i])
+			if dis < 0 {
+				dis = -dis
+			}
+			if dis > 10-dis {
+				dis = 10 - dis
+			}
+			ret += dis
+		}
+		return ret
+	}
+	h := &hp{}
+	heap.Push(h, astar{0, getH(start), start})
+	visited[start] = true
+	for h.Len() > 0 {
+		node := heap.Pop(h).(astar)
+		for _, status := range next(node.status) {
+			if visited[status] {
+				continue
+			}
+			if status == target {
+				return node.g + 1
+			}
+			heap.Push(h, astar{node.g + 1, getH(status), status})
+			visited[status] = true
+		}
+	}
+	return -1
 }
