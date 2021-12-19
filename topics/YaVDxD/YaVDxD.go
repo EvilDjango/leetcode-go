@@ -40,6 +40,26 @@
 // @create 12/18/21 9:04 PM
 package YaVDxD
 
+// 动态规划
+// 可以认为是将nums分组，前面为+的一组总和记为a，前面为-的一组总和记为b，记nums总和为sum，那么有a+b=sum,a-b=target
+// 计算可得a=(sum+target)/2 b=(sum-target)/2
+// 利用这个关系，我们可以仅关注a或者b，减少运算
+// sum+target==2a，必为偶数
 func findTargetSumWays(nums []int, target int) int {
-
+	sum := 0
+	for _, num := range nums {
+		sum += num
+	}
+	if (sum-target)%2 != 0 {
+		return 0
+	}
+	// dp[i]表示挑选一部分元素凑成总和的方案数
+	dp := make([]int, (sum+target)/2+1)
+	dp[0] = 1
+	for _, num := range nums {
+		for i := len(dp) - 1; i >= num; i-- {
+			dp[i] += dp[i-num]
+		}
+	}
+	return dp[len(dp)-1]
 }
