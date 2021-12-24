@@ -11,6 +11,15 @@ type ListNode struct {
 	Next *ListNode
 }
 
+func (l *ListNode) String() string {
+	var nums []int
+	for l != nil {
+		nums = append(nums, l.Val)
+		l = l.Next
+	}
+	return fmt.Sprint(nums)
+}
+
 func New(nums ...int) *ListNode {
 	dummy := &ListNode{}
 	curr := dummy
