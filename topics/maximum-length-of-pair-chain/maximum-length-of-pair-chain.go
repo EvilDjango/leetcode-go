@@ -28,45 +28,66 @@ import (
 	"sort"
 )
 
-// 动态规划
+// 贪心+二分，按左端点排序，然后维护一个数组来表示各个长度的序列右端点的最小值
 func findLongestChain(pairs [][]int) int {
 	sort.Slice(pairs, func(i, j int) bool {
 		return pairs[i][0] < pairs[j][0]
 	})
-	n := len(pairs)
-	// dp[i]表示以i位置元素结尾的数对链的最大长度
-	dp := make([]int, n)
-	maxLen := 0
-	for i := 0; i < n; i++ {
-		maxPrecursors := 0
-		for j := 0; j < i && pairs[j][0] < pairs[i][0]; j++ {
-			if pairs[j][1] < pairs[i][0] {
-				maxPrecursors = max(maxPrecursors, dp[j])
+	// end[i]表示长度为i+1的序列最右端的最小值
+	var ends []int
+	for _, pair := range pairs {
+		l, r := 0, len(ends)
+		for l < r {
+			mid := (r-l)>>1 + l
+			if ends[mid] >= pair[0] {
+				r = mid
+			} else {
+				l = mid + 1
 			}
 		}
-		dp[i] = maxPrecursors + 1
-		maxLen = max(maxLen, dp[i])
+		if l == len(ends) {
+			ends = append(ends, pair[1])
+		} else if pair[1] < ends[l] {
+			ends[l] = pair[1]
+		}
 	}
-	return maxLen
-}
-func max(i, j int) int {
-	if i > j {
-		return i
-	}
-	return j
+	return len(ends)
 }
 
-// 贪心，按照右端点排序，那么右端点最小的应该作为第一个元素，依次类推
+// 贪心解法2，按右端点排序，那么最长序列的第一个数对一定是第一个数对，依次类推
 func findLongestChain2(pairs [][]int) int {
 	sort.Slice(pairs, func(i, j int) bool {
 		return pairs[i][1] < pairs[j][1]
 	})
 	maxLen := 0
-	right := math.MinInt32
+	right := math.MinInt64
 	for _, pair := range pairs {
 		if pair[0] > right {
-			right = pair[1]
 			maxLen++
+			right = pair[1]
+		}
+	}
+	return maxLen
+}
+
+// 动态规划
+func findLongestChain3(pairs [][]int) int {
+	n := len(pairs)
+	sort.Slice(pairs, func(i, j int) bool {
+		return pairs[i][0] < pairs[j][0]
+	})
+	// dp[i]表示以pairs[i]结尾的序列的最大长度
+	dp := make([]int, n)
+	maxLen := 1
+	for i := 0; i < n; i++ {
+		dp[i] = 1
+		for j := i - 1; j >= 0; j-- {
+			// 往左遇到的第一个可以拼接的数对一定可以组成最长数对，因为pairs[j]的左端点一定是可拼接的数对中最大的，留给左侧的空间最多
+			if pairs[j][1] < pairs[i][0] {
+				dp[i] = dp[j] + 1
+				maxLen = dp[i]
+				break
+			}
 		}
 	}
 	return maxLen
