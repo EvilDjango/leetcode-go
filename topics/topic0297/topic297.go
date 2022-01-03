@@ -1,8 +1,6 @@
 package topic0297
 
 import (
-	"bytes"
-	"leetcode-go/container/tree"
 	"strconv"
 	"strings"
 )
@@ -56,11 +54,146 @@ Copyright (c) @2021 deerhunter0837@gmail.com All Rights Reserved.
  * }
  */
 
+import . "leetcode-go/container/tree"
+
 const (
-	Sep  = "|"
-	Null = ""
+	Null = "X"
+	Sep  = ","
 )
 
+//// 广度遍历解法
+//type Codec struct {
+//}
+//
+//func Constructor() Codec {
+//	return Codec{}
+//}
+//
+//// Serializes a tree to a single string.
+//func (this *Codec) serialize(root *TreeNode) string {
+//	builder := strings.Builder{}
+//	q := []*TreeNode{root}
+//	for len(q) > 0 {
+//		if builder.Len() > 0 {
+//			builder.WriteString(Sep)
+//		}
+//		node := q[0]
+//		q = q[1:]
+//		c := Null
+//		if node != nil {
+//			c = strconv.Itoa(node.Val)
+//		}
+//		builder.WriteString(c)
+//		if node != nil {
+//			q = append(q, node.Left)
+//			q = append(q, node.Right)
+//		}
+//	}
+//	return builder.String()
+//}
+//
+//// Deserializes your encoded data to tree.
+//func (this *Codec) deserialize(data string) *TreeNode {
+//	if data == "X" {
+//		return nil
+//	}
+//	nodes := strings.Split(data, Sep)
+//	root := parseNode(nodes[0])
+//	q := []*TreeNode{root}
+//	i := 1
+//	for i < len(nodes) {
+//		node := q[0]
+//		q = q[1:]
+//		node.Left = parseNode(nodes[i])
+//		node.Right = parseNode(nodes[i+1])
+//		i += 2
+//		if node.Left != nil {
+//			q = append(q, node.Left)
+//		}
+//		if node.Right != nil {
+//			q = append(q, node.Right)
+//		}
+//	}
+//	return root
+//}
+//
+//func parseNode(s string) *TreeNode {
+//	if s == "X" {
+//		return nil
+//	}
+//	i, _ := strconv.Atoi(s)
+//	return &TreeNode{Val: i}
+//}
+
+//// 深度遍历解法
+//type Codec struct {
+//}
+//
+//func Constructor() Codec {
+//	return Codec{}
+//}
+//
+//// Serializes a tree to a single string.
+//func (this *Codec) serialize(root *TreeNode) string {
+//	if root == nil {
+//		return "X"
+//	}
+//	builder := strings.Builder{}
+//	var stack []*TreeNode
+//	for root != nil || len(stack) > 0 {
+//		if root != nil {
+//			if builder.Len() > 0 {
+//				builder.WriteString(Sep)
+//			}
+//			builder.WriteString(strconv.Itoa(root.Val))
+//			stack = append(stack, root)
+//			root = root.Left
+//		} else {
+//			builder.WriteString(Sep)
+//			builder.WriteString(Null)
+//			root = stack[len(stack)-1].Right
+//			stack = stack[:len(stack)-1]
+//		}
+//	}
+//	return builder.String()
+//}
+//
+//// Deserializes your encoded data to tree.
+//func (this *Codec) deserialize(data string) *TreeNode {
+//	if data == "X" {
+//		return nil
+//	}
+//	nodes := strings.Split(data, Sep)
+//	root := parseNode(nodes[0])
+//	stack := []*TreeNode{root}
+//	i := 1
+//	left := true
+//	for i < len(nodes) {
+//		node := parseNode(nodes[i])
+//		i++
+//		if left {
+//			stack[len(stack)-1].Left = node
+//		} else {
+//			stack[len(stack)-1].Right = node
+//			stack = stack[:len(stack)-1]
+//		}
+//		left = node != nil
+//		if node != nil {
+//			stack = append(stack, node)
+//		}
+//	}
+//	return root
+//}
+//
+//func parseNode(s string) *TreeNode {
+//	if s == "X" {
+//		return nil
+//	}
+//	i, _ := strconv.Atoi(s)
+//	return &TreeNode{Val: i}
+//}
+
+// 括号表示编码 + 递归下降解码,参考了官方题解
 type Codec struct {
 }
 
@@ -68,91 +201,50 @@ func Constructor() Codec {
 	return Codec{}
 }
 
-// Serializes a container to a single string.
-func (this *Codec) serialize(root *tree.TreeNode) string {
-	buf := bytes.Buffer{}
-	buf.WriteString(toString(root))
-	buf.WriteString(Sep)
-	var q []*tree.TreeNode
-	if root != nil {
-		q = append(q, root)
-	}
-	for len(q) > 0 {
-		size := len(q)
-		for i := 0; i < size; i++ {
-			node := q[i]
-			buf.WriteString(toString(node.Left))
-			buf.WriteString(Sep)
-			buf.WriteString(toString(node.Right))
-			buf.WriteString(Sep)
-			if node.Left != nil {
-				q = append(q, node.Left)
-			}
-			if node.Right != nil {
-				q = append(q, node.Right)
-			}
+// Serializes a tree to a single string.
+func (this *Codec) serialize(root *TreeNode) string {
+	sb := strings.Builder{}
+	var dfs func(*TreeNode)
+	dfs = func(root *TreeNode) {
+		if root == nil {
+			sb.WriteString("X")
+			return
 		}
-		q = q[size:]
+		sb.WriteString("(")
+		dfs(root.Left)
+		sb.WriteString(")")
+		sb.WriteString(strconv.Itoa(root.Val))
+		sb.WriteString("(")
+		dfs(root.Right)
+		sb.WriteString(")")
 	}
-	buf.Truncate(buf.Len() - 1)
-	return buf.String()
+	dfs(root)
+	return sb.String()
 }
 
-// Deserializes your encoded data to container.
-func (this *Codec) deserialize(data string) *tree.TreeNode {
-	vals := strings.Split(data, Sep)
-	root := parseNode(vals[0])
-	i := 1
-	var q []*tree.TreeNode
-	if root != nil {
-		q = append(q, root)
-	}
-	for i < len(vals) && len(q) > 0 {
-		size := len(q)
-		for j := 0; i < len(vals) && j < size; j++ {
-			node := q[j]
-			node.Left = parseNode(vals[i])
-			if i+1 < len(vals) {
-				node.Right = parseNode(vals[i+1])
-			}
-			if node.Left != nil {
-				q = append(q, node.Left)
-			}
-			if node.Right != nil {
-				q = append(q, node.Right)
-			}
-			i += 2
+// Deserializes your encoded data to tree.
+func (this *Codec) deserialize(data string) *TreeNode {
+	i := 0
+	var dfs func() *TreeNode
+	dfs = func() *TreeNode {
+		if data[i] == 'X' {
+			i++
+			return nil
 		}
-		q = q[size:]
+		root := &TreeNode{}
+		i++
+		root.Left = dfs()
+		i++
+		j := i + 1
+		for data[j] != '(' {
+			j++
+		}
+		num, _ := strconv.Atoi(data[i:j])
+		root.Val = num
+		i = j + 1
+		root.Right = dfs()
+		i++
+		return root
 	}
-	if i != len(vals) {
-		panic("invalid data: " + data)
-	}
-	return root
+	return dfs()
 }
-
-func parseNode(s string) *tree.TreeNode {
-	if s == Null {
-		return nil
-	}
-	val, err := strconv.Atoi(s)
-	if err != nil {
-		panic("invalid data. want digit, got " + s)
-	}
-	return &tree.TreeNode{Val: val}
-}
-
-func toString(node *tree.TreeNode) string {
-	if node == nil {
-		return Null
-	}
-	return strconv.Itoa(node.Val)
-}
-
-/**
- * Your Codec object will be instantiated and called as such:
- * ser := Constructor();
- * deser := Constructor();
- * data := ser.serialize(root);
- * ans := deser.deserialize(data);
- */
