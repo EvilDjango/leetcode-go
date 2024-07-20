@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	transformArray("[[1,2,2],[1,1,0],[0,1,1]]")
+	transformArray("[[1,1,2],[1,2,1],[2,1,1]]")
 
 }
 
