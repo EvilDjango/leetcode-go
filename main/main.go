@@ -4,10 +4,16 @@
 // @create 2024/7/6 上午11:35
 package main
 
+import (
+	"fmt"
+	"strings"
+)
+
 func main() {
-	a := []int{1, 2, 3}
-	for i, v := range a {
-		print(i, v)
-	}
-	print(1 << 1 * 3)
+	transformArray("[[1,2,2],[1,1,0],[0,1,1]]")
+
+}
+
+func transformArray(arr string) {
+	fmt.Println(strings.ReplaceAll(strings.ReplaceAll(arr, "[", "{"), "]", "}"))
 }
