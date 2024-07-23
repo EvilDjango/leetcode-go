@@ -6,6 +6,7 @@ package minimum_moves_to_spread_stones_over_grid
 
 import (
 	"fmt"
+	"math"
 )
 
 func minimumMoves(grid [][]int) int {
@@ -79,4 +80,71 @@ func abs(i int) int {
 		return i
 	}
 	return -i
+}
+
+func minimumMoves2(grid [][]int) int {
+	var riches, poors [][]int
+	for i := 0; i < 3; i++ {
+		for j := 0; j < 3; j++ {
+			for k := 1; k < grid[i][j]; k++ {
+				riches = append(riches, []int{i, j})
+			}
+			if grid[i][j] == 0 {
+				poors = append(poors, []int{i, j})
+			}
+		}
+	}
+	if len(poors) == 0 {
+		return 0
+	}
+
+	ans := math.MaxInt32
+	for {
+		steps := 0
+		for i, rich := range riches {
+			steps += dis(rich, poors[i])
+		}
+		if steps < ans {
+			ans = steps
+		}
+		if !nextPermutation(riches) {
+			break
+		}
+	}
+	return ans
+}
+
+func nextPermutation(riches [][]int) bool {
+	n := len(riches)
+	p := -1
+	for i := 0; i < n-1; i++ {
+		if less(riches[i], riches[i+1]) {
+			p = i
+		}
+	}
+	if p == -1 {
+		return false
+	}
+	q := p + 1
+	for i := q + 1; i < n; i++ {
+		if less(riches[p], riches[i]) {
+			q = i
+		}
+	}
+	riches[p], riches[q] = riches[q], riches[p]
+	left, right := p+1, n-1
+	for left < right {
+		riches[left], riches[right] = riches[right], riches[left]
+		left++
+		right--
+	}
+	return true
+}
+
+func less(a, b []int) bool {
+	return a[0] < b[0] || (a[0] == b[0] && a[1] < b[1])
+}
+
+func dis(i, j []int) int {
+	return abs(i[0]-j[0]) + abs(i[1]-j[1])
 }

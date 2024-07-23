@@ -6,10 +6,12 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"strings"
 )
 
 func main() {
+	fmt.Println(math.Inf(1))
 	transformArray("[[1,1,2],[1,2,1],[2,1,1]]")
 
 }
