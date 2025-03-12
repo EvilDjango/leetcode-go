@@ -6,14 +6,41 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"slices"
 	"strings"
 )
 
 func main() {
-	//transformArray("[[1,1,2],[1,2,1],[2,1,1]]")
-	fmt.Println(byte(99))
-	fmt.Println(uint(1))
-	fmt.Println(uint8(1))
+	for {
+		foo()
+	}
+}
+func foo() {
+	bound := 1000
+	size := rand.Intn(bound)
+	arr := make([]int, size)
+	for i := 0; i < size; i++ {
+		arr[i] = rand.Intn(bound)
+	}
+	indices := make([]int, size)
+	for i := 0; i < size; i++ {
+		indices[i] = i
+	}
+	//sort.Slice(indices, func(i, j int) bool {
+	//	return arr[indices[i]] < arr[indices[j]]
+	//})
+
+	slices.SortFunc(indices, func(i, j int) int {
+		return arr[i] - arr[j]
+	})
+
+	for i := 1; i < size; i++ {
+		if arr[indices[i]] < arr[indices[i-1]] {
+			panic("gotcha")
+		}
+	}
+	fmt.Println("finished")
 }
 
 func transformArray(arr string) {
